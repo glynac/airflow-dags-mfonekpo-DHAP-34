@@ -56,5 +56,5 @@ before connecting, ensure the PostgreSQL container is running:
    - **Maintenance** DB: DB var is in your `.env`
 
 ## Notes
-- The external PostgreSQL connection for your pipelines is configured via variables in `.env.example` (e.g., EXT_POSTGRES_*).
+- The external PostgreSQL connection for your pipelines is configured via variables in `.env` (e.g., EXT_POSTGRES_*).
 - In DAGs, create a connection ID (e.g., `my_external_pg`) using those env vars or set it in Airflow UI.
