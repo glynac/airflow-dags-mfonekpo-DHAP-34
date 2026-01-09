@@ -7,6 +7,20 @@ import yaml
 
 @task(retries=2, retry_delay=pendulum.duration(seconds=10))
 def validation():
+    """
+    Validates the email thread summary dataset.
+
+    This task checks for the following:
+    1. Column names in the CSV file match the expected schema in the YAML file.
+    2. Data types of each column in the CSV file match the expected schema in the YAML file.
+    3. Nullability constraints are satisfied for each column.
+
+    If any of the above checks fail, the task will raise a ValueError with a message detailing the
+    mismatch.
+
+    Returns a dictionary containing the total number of rows in the CSV file, the number of sampled rows
+    checked, and a status of "success".
+    """
     yml_file = "/opt/airflow/config/schema_expected.yml"
     csv_file = "/opt/airflow/sample_data/email_thread_details.csv"
 
@@ -82,7 +96,7 @@ def validation():
                         f"Column '{col}' marked as 'timestamp' but contains invalid date/time values"
                     )
 
-        # Optional: varchar length check
+        #varchar length check
         if expected_yaml_type == "varchar(255)":
             max_length = random_sample[col].astype(str).str.len().max()
             if max_length > 255:
