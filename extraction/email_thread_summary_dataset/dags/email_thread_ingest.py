@@ -2,6 +2,7 @@ from airflow.sdk import dag
 from pendulum import duration
 from file_check import file_check
 from validation import validation
+from transform import transform
 
 @dag(
     dag_id="email_thread_ingest",
@@ -17,7 +18,8 @@ def email_thread_ingest_dag():
     """
     file_check_task = file_check()
     validation_task = validation()
+    transform_task = transform()
 
-    file_check_task >> validation_task
+    file_check_task >> validation_task >> transform_task
 
 email_thread_ingest_dag()
