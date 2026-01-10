@@ -3,6 +3,7 @@ from pendulum import duration
 from file_check import file_check
 from validation import validation
 from transform import transform
+from load import load
 
 @dag(
     dag_id="email_thread_ingest",
@@ -19,7 +20,8 @@ def email_thread_ingest_dag():
     file_check_task = file_check()
     validation_task = validation()
     transform_task = transform()
+    load_task = load()
 
-    file_check_task >> validation_task >> transform_task
+    file_check_task >> validation_task >> transform_task >> load_task
 
 email_thread_ingest_dag()
