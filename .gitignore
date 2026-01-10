@@ -20,6 +20,7 @@ __pycache__/
 .env.local
 .env.example
 venv/
+*.cfg
 
 # IDE/editor files
 .idea/
